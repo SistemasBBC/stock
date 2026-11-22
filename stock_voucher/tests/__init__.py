@@ -5,4 +5,3 @@
 from . import test_stock_picking_voucher
 from . import test_stock_book
 from . import test_stock_picking
-from . import test_declared_value
