@@ -12,6 +12,10 @@ class TestDeclaredValue(TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.warehouse = cls.env["stock.warehouse"].search([("company_id", "=", cls.env.company.id)], limit=1)
+        # El test mide declared_value sobre order.picking_ids como si fuera un unico
+        # picking. Con delivery_steps distinto de ship_only el pedido genera tambien el
+        # picking interno y la medicion cae sobre el equivocado, dando 0.0.
+        cls.warehouse.delivery_steps = "ship_only"
         cls.warehouse.out_type_id.automatic_declare_value = True
         partner_vals = {"name": "Declared Value Customer"}
         if "partner_state" in cls.env["res.partner"]._fields:
